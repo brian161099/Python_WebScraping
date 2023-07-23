@@ -53,11 +53,11 @@ def CheckRateLimit(client, turn, iterations, action, progress):
         
 # 為CheckRateLimit設置基本參數 (Initial Client: 宗霖)
 
-consumer_key = "Ap7vCI7SI6LbyKCulE2llc0W1"
-consumer_secret = "2KFxYIHnptKH6joGnZOv3l9kuiRchLZUk7EqCn6V5gbL9PEPDO"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAEXGbAEAAAAAB7Ec9uM5SR8R13FHJwLfdFCxOlE%3D931GBmUHhPZFhEygnh8WkmK7wltleAn8VB8AQnSDXF1pI7UQsr"
-access_token = "4463037914-2Rxmc3ZDseYIUyR3E67LG4JMnNSZle9chlEimUI"
-access_token_secret = "8jQkYBrB05L10DrKfgyOAjf3Q4FFi5cwAV7nrl44f7jNd"
+bearer_token=df_client["bearer_token"][0]
+consumer_key=df_client["consumer_key"][0]
+consumer_secret=df_client["consumer_secret"][0]
+access_token=df_client["access_token"][0]
+access_token_secret=df_client["access_token_secret"][0]
 
 turn = 0
 iterations = {"search": 0,"retweet": 0, "like": 0, "follower": 0, "user":0}
