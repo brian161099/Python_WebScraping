@@ -45,6 +45,8 @@ from bs4 import BeautifulSoup as bs
 
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
+import pandas as pd
+
 def start_chrome():
     # 啟動瀏覽器工具的選項
     my_options = webdriver.ChromeOptions()
@@ -65,57 +67,6 @@ def start_chrome():
     )
     return driver
 
-# # %%
-# driver = start_chrome()
-# driver.get('https://www.oxfordreference.com/display/10.1093/acref/9780195081374.001.0001/acref-9780195081374')
-
-# # 取得檢視原始碼的內容 (page_source 取得的 html，是動態的、使用者操作過後的結果)
-# html = driver.page_source
-
-# # 印出 html (也可以跟 Beautifulsoup 整合)
-# # print(html)
-
-# # 指定 lxml 作為解析器
-# soup = bs(html, "lxml")
-
-# # 取得 上方選單 元素
-# ul = soup.select_one('#searchContent > div:nth-child(1) > h2 > a')
-
-# # 顯示內文
-# print(ul.get_text())
-
-# # 休眠幾秒
-# sleep(3)
-
-# # 關閉瀏覽器
-# driver.quit()
-# %%
-# driver = start_chrome()
-# try:
-#     # 最多等 15 秒
-#     driver.implicitly_wait(15)
-    
-#     # 走訪網址
-#     driver.get('https://www.oxfordreference.com/display/10.1093/acref/9780195081374.001.0001/acref-9780195081374')
-    
-#     # 取得元素
-#     for idx in range(1, 21):
-#         elements = driver.find_elements(By.CSS_SELECTOR, f'#searchContent > div:nth-child({idx}) > h2 > a')
-
-#         # 迴圈遍歷每一個元素
-#         for element in elements:
-#             # 印出每一個元素的超連結 ( 透過 .get_attribute('屬性') 來取得屬性的值 )
-#             print(element.get_attribute('href'))
-
-# except NoSuchElementException:
-#     print("找不到元素!")
-
-# finally:
-#     # 關閉瀏覽器
-#     driver.quit()
-# %%
-import pandas as pd
-
 driver = start_chrome()
 
 df_result = pd.DataFrame(columns=['title', 'content'])
@@ -123,10 +74,10 @@ df_dict = {}
 
 # 最多等 10 秒
 driver.implicitly_wait(10)
-count = 11
+count = 66639
 driver.get(f'https://www.oxfordreference.com/display/10.1093/acref/9780195081374.001.0001/acref-9780195081374')
 # 走訪網址
-for idx in range(1, 70317):
+for idx in range(53000, 70317):
     driver.get(f'https://www.oxfordreference.com/display/10.1093/acref/9780195081374.001.0001/acref-9780195081374-e-{idx}')
     element = driver.find_element(By.CSS_SELECTOR, "#pagetitle > span.oxencycl-headword")
     title = element.get_attribute('innerText')
@@ -151,11 +102,11 @@ for idx in range(1, 70317):
     # temp-save
     if idx % 1000 == 0:
         df_temp_result = pd.DataFrame(list(df_dict.items()), columns=['title', 'content'])
-        df_temp_result.to_csv(f'temp_dictionary_1_to_{idx}.csv', index=False)
+        df_temp_result.to_csv(f'temp_dictionary_53000_to_{idx}.csv', index=False)
 
     # 關閉瀏覽器
 driver.quit()
 df_result = pd.DataFrame(list(df_dict.items()), columns=['title', 'content'])
-df_result.to_csv(f'final_dictionary.csv', index=False)
+df_result.to_csv('final_dictionary_53000.csv', index=False)
 
 # %%
